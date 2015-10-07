@@ -1,5 +1,6 @@
 package com.zy.proposal.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -9,7 +10,7 @@ import com.zy.common.entity.BaseEntity;
 import com.zy.org.entity.User;
 
 /**
- * ĞéÄâ±Ò½»Ò×ÉêÇëÌá°¸
+ * è™šæ‹Ÿå¸äº¤æ˜“ç”³è¯·ææ¡ˆ
  * 
  * @author Jeff Xu
  *
@@ -20,11 +21,40 @@ public class ProposalTrade extends BaseEntity {
 
 	private static final long serialVersionUID = -785028101882562247L;
 
-	// ÉêÇëÈË
+	// ç”³è¯·äºº
 	private User applier;
 
-	// ÉóÅúÈË
+	// å®¡æ‰¹äºº
 	private User approvier;
+
+	private Integer proposalNo;		//ææ¡ˆå·
+	
+	private String tradeId;			//äº¤æ˜“å·
+	
+	private String account;			//è´¦å·
+	
+	private double amount;			//é‡‘é¢
+	
+	private Integer payType;		//å­˜æ¬¾é€”ç»
+	
+	private Integer curType;		//å¸ç§
+	
+	private Integer status;			//ææ¡ˆçŠ¶æ€
+	
+	private String ip;				//æ“ä½œIP
+	
+	private String frontMsg;		//å‰å°msg
+	
+	private String bgMsg;			//åå°msg
+	
+	@Column(name="account")
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "applier_id")
@@ -44,6 +74,87 @@ public class ProposalTrade extends BaseEntity {
 
 	public void setApprovier(User approvier) {
 		this.approvier = approvier;
+	}
+
+	@Column(name="proposal_no", insertable=false)
+	public Integer getProposalNo() {
+		return proposalNo;
+	}
+
+	public void setProposalNo(Integer proposalNo) {
+		this.proposalNo = proposalNo;
+	}
+
+	@Column(name="trade_id")
+	public String getTradeId() {
+		return tradeId;
+	}
+
+	public void setTradeId(String tradeId) {
+		this.tradeId = tradeId;
+	}
+
+	@Column(name="amount")
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	@Column(name="pay_type", precision=1)
+	public Integer getPayType() {
+		return payType;
+	}
+
+	public void setPayType(Integer payType) {
+		this.payType = payType;
+	}
+
+	@Column(name="cur_type", precision=1)
+	public Integer getCurType() {
+		return curType;
+	}
+
+	public void setCurType(Integer curType) {
+		this.curType = curType;
+	}
+
+	@Column(name="status", precision=1)
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	@Column(name="ip", length=128)
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	@Column(name="front_msg", length=512)
+	public String getFrontMsg() {
+		return frontMsg;
+	}
+
+	public void setFrontMsg(String frontMsg) {
+		this.frontMsg = frontMsg;
+	}
+
+	@Column(name="bg_msg", length=512)
+	public String getBgMsg() {
+		return bgMsg;
+	}
+
+	public void setBgMsg(String bgMsg) {
+		this.bgMsg = bgMsg;
 	}
 
 }
