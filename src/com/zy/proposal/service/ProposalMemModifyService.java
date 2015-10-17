@@ -12,6 +12,7 @@ import com.zy.common.service.CommonService;
 import com.zy.common.util.CommonConstants;
 import com.zy.member.entity.Member;
 import com.zy.member.service.MemberService;
+import com.zy.org.entity.User;
 import com.zy.personal.entity.MemBankInfo;
 import com.zy.personal.service.MemBankInfoService;
 import com.zy.proposal.dao.ProposalMemModifyDao;
@@ -38,9 +39,9 @@ public class ProposalMemModifyService extends CommonService<ProposalMemModify, S
 		return proposalMemModifyDao.queryPage(params, currentPage, pageSize);
 	}
 	
-	public void updateBatchPosPass(String[] ids, String msg){
+	public void updateBatchPosPass(String[] ids, String msg, User user){
 		for(String id : ids){
-			updatePosPass(id, msg);
+			updatePosPass(id, msg, user);
 		}
 	}
 	
@@ -48,11 +49,12 @@ public class ProposalMemModifyService extends CommonService<ProposalMemModify, S
 	 * 提案通过
 	 * @param id
 	 */
-	public void updatePosPass(String id, String msg){
+	public void updatePosPass(String id, String msg, User user){
 		
 		ProposalMemModify proposalMemModify = proposalMemModifyDao.findOne(id);
 		proposalMemModify.setPosStatus(CommonConstants.proposalStatusPass.getIntKey());
 		proposalMemModify.setMsg(msg);
+		proposalMemModify.setApprovier(user);
 		proposalMemModifyDao.save(proposalMemModify);
 		
 		Member member = null;
@@ -104,9 +106,9 @@ public class ProposalMemModifyService extends CommonService<ProposalMemModify, S
 		memberService.save(member);
 	}
 	
-	public void updateBatchPosCancel(String[] ids, String msg){
+	public void updateBatchPosCancel(String[] ids, String msg, User user){
 		for(String id : ids){
-			updatePosCancel(id, msg);
+			updatePosCancel(id, msg, user);
 		}
 	}
 	
@@ -115,10 +117,11 @@ public class ProposalMemModifyService extends CommonService<ProposalMemModify, S
 	 * @param id
 	 * @param msg
 	 */
-	public void updatePosCancel(String id, String msg){
+	public void updatePosCancel(String id, String msg, User user){
 		
 		ProposalMemModify proposalMemModify = proposalMemModifyDao.findOne(id);
 		proposalMemModify.setPosStatus(CommonConstants.proposalStausCancel.getIntKey());
+		proposalMemModify.setApprovier(user);
 		proposalMemModify.setMsg(msg);
 		
 		proposalMemModifyDao.save(proposalMemModify);
