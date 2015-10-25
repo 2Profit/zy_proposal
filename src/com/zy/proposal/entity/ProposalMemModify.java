@@ -51,6 +51,8 @@ public class ProposalMemModify extends BaseEntity {
 	
 	private String enName;				//英文名
 	
+	private String nickName;			//昵称
+	
 	private Date createAccountDate;		//开户日期
 	
 	private String status;				//状态（0-启用，1-冻结，2-黑名单，3-销户）
@@ -74,6 +76,8 @@ public class ProposalMemModify extends BaseEntity {
 	private Member member;				//修改的用户
 	
 	private String msg;					//审核意见
+	
+	private String pwd;					//密码
 	
 	// 申请人
 	private User applier;
@@ -325,6 +329,24 @@ public class ProposalMemModify extends BaseEntity {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	@Column(name="nick_name", length=128)
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	@Column(name="pwd", length=128)
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 	
 }

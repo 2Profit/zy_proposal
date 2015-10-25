@@ -19,18 +19,32 @@ public class ProposalTradeDaoImpl extends CustomBaseSqlDaoImpl implements Propos
 		if(proposalNo != null){
 			sb.append(" and t.proposalNo = :proposalNo ");
 		}
-		Object curType = params.get("curType");
-		if(curType != null){
-			sb.append(" and t.curType = :curType ");
-		}
+		
 		Object payType = params.get("payType");
 		if(payType != null){
 			sb.append(" and t.payType = :payType ");
 		}
+		
 		Object status = params.get("status");
 		if(status != null){
 			sb.append(" and t.status = :status ");
 		}
+		
+		Object memberNo = params.get("memberNo");
+		if(memberNo != null){
+			sb.append(" and t.member.no = :memberNo ");
+		}
+		
+		Object mobile = params.get("mobile");
+		if(mobile != null){
+			sb.append(" and t.member.mobile = :mobile ");
+		}
+		
+		Object cnName = params.get("cnName");
+		if(cnName != null){
+			sb.append(" and t.member.cnName like :cnName ");
+		}
+		
 		
 		sb.append(" order by t.createDate desc ");
 		

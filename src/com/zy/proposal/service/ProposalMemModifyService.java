@@ -17,6 +17,7 @@ import com.zy.personal.entity.MemBankInfo;
 import com.zy.personal.service.MemBankInfoService;
 import com.zy.proposal.dao.ProposalMemModifyDao;
 import com.zy.proposal.entity.ProposalMemModify;
+import com.zy.util.Md5Util;
 
 @Service
 public class ProposalMemModifyService extends CommonService<ProposalMemModify, String> {
@@ -64,6 +65,12 @@ public class ProposalMemModifyService extends CommonService<ProposalMemModify, S
 		}else{
 			//修改
 			member = proposalMemModify.getMember();
+			
+			//密码
+			String pwd = proposalMemModify.getPwd();
+			if(!"########".equals(pwd)){
+				member.setPwd(Md5Util.generatePassword(pwd));
+			}
 		}
 		
 		member.setNo(proposalMemModify.getNo());
@@ -99,8 +106,16 @@ public class ProposalMemModifyService extends CommonService<ProposalMemModify, S
 			member.setNationality(null);
 		}
 		
+		if(StringUtils.isNotBlank(proposalMemModify.getImgIDCardA()) 
+				&& !proposalMemModify.getImgIDCardA().equals(member.getImgIDCardA())){
+			member.setImgIDCardStatus(Member.IMG_STATUS_TG);
+		}
 		member.setImgIDCardA(proposalMemModify.getImgIDCardA());
-		member.setImgIDCardB(proposalMemModify.getImgIDCardB());
+		
+		if(StringUtils.isNotBlank(proposalMemModify.getImgBankCard())
+				&& !proposalMemModify.getImgBankCard().equals(member.getImgBankCard())){
+			member.setImgBackCardStatus(Member.IMG_STATUS_TG);
+		}
 		member.setImgBankCard(proposalMemModify.getImgBankCard());
 		
 		memberService.save(member);
@@ -125,6 +140,14 @@ public class ProposalMemModifyService extends CommonService<ProposalMemModify, S
 		proposalMemModify.setMsg(msg);
 		
 		proposalMemModifyDao.save(proposalMemModify);
+	}
+	
+	public int findCountByMobile(String mobile, Integer posStatus){
+		return proposalMemModifyDao.findCountByMobile(mobile, posStatus);
+	}
+	
+	public int findCountByEmail(String email, Integer posStatus) {
+		return proposalMemModifyDao.findCountByEmail(email, posStatus);
 	}
 	
 }

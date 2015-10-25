@@ -1,12 +1,16 @@
 package com.zy.proposal.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.zy.common.entity.BaseEntity;
+import com.zy.member.entity.Member;
 import com.zy.org.entity.User;
 
 /**
@@ -26,18 +30,18 @@ public class ProposalTrade extends BaseEntity {
 
 	// 审批人
 	private User approvier;
+	
+	private Date approveDate;		//审批时间
 
 	private Integer proposalNo;		//提案号
 	
 	private String tradeId;			//交易号
 	
-	private String account;			//账号
+	private Member member;			//
 	
 	private double amount;			//金额
 	
 	private Integer payType;		//存款途经
-	
-	private Integer curType;		//币种
 	
 	private Integer status;			//提案状态
 	
@@ -47,13 +51,13 @@ public class ProposalTrade extends BaseEntity {
 	
 	private String bgMsg;			//后台msg
 	
-	@Column(name="account")
-	public String getAccount() {
-		return account;
+	@Column(name="approve_date")
+	public Date getApproveDate() {
+		return approveDate;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setApproveDate(Date approveDate) {
+		this.approveDate = approveDate;
 	}
 
 	@ManyToOne
@@ -112,15 +116,6 @@ public class ProposalTrade extends BaseEntity {
 		this.payType = payType;
 	}
 
-	@Column(name="cur_type", precision=1)
-	public Integer getCurType() {
-		return curType;
-	}
-
-	public void setCurType(Integer curType) {
-		this.curType = curType;
-	}
-
 	@Column(name="status", precision=1)
 	public Integer getStatus() {
 		return status;
@@ -155,6 +150,16 @@ public class ProposalTrade extends BaseEntity {
 
 	public void setBgMsg(String bgMsg) {
 		this.bgMsg = bgMsg;
+	}
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="member_id")
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.zy.proposal.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,10 +27,15 @@ public class ProposalCoin extends BaseEntity {
 	 */
 	private static final long serialVersionUID = -2131660388118786620L;
 
+	private Integer proposalNo;		//编号
 	
 	private User applier;			//提案人员
 	
 	private User approvier;			//审核人员
+	
+	private Date approvierDate;		//审批时间
+	
+	private Integer posStatus;		//提案状态
 	
 	private Member member;			//
 	
@@ -82,6 +89,33 @@ public class ProposalCoin extends BaseEntity {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	@Column(name="proposal_no", insertable=false)
+	public Integer getProposalNo() {
+		return proposalNo;
+	}
+
+	public void setProposalNo(Integer proposalNo) {
+		this.proposalNo = proposalNo;
+	}
+
+	@Column(name="approvier_date")
+	public Date getApprovierDate() {
+		return approvierDate;
+	}
+
+	public void setApprovierDate(Date approvierDate) {
+		this.approvierDate = approvierDate;
+	}
+
+	@Column(name="pos_status", precision=1)
+	public Integer getPosStatus() {
+		return posStatus;
+	}
+
+	public void setPosStatus(Integer posStatus) {
+		this.posStatus = posStatus;
 	}
 	
 }
