@@ -61,8 +61,9 @@ public class ProposalCoinService extends CommonService<ProposalCoin, String> {
 		
 		MemCoinLog memCoinLog = new MemCoinLog();
 		memCoinLog.setBeforeCoin(member.getCoin() == null ? 0 : member.getCoin());
-//		memCoinLog.setCoin(coin);
-		memCoinLog.setAfterCoin(proposalCoin.getCoin());
+		memCoinLog.setCoin(proposalCoin.getCoin());
+		int afterCoin = memCoinLog.getBeforeCoin() + proposalCoin.getCoin();
+		memCoinLog.setAfterCoin(afterCoin);
 		memCoinLog.setChangeId(proposalCoin.getId());
 		memCoinLog.setChangeType(MemCoinLog.CHANGE_TYPE_EDTZ);
 		memCoinLog.setCreateId(user.getId());
@@ -70,7 +71,7 @@ public class ProposalCoinService extends CommonService<ProposalCoin, String> {
 		memCoinLog.setType(MemCoinLog.TYPE_PAY);
 		memCoinLogService.save(memCoinLog);
 		
-		member.setCoin(proposalCoin.getCoin());
+		member.setCoin(afterCoin);
 		memberService.update(member);
 	}
 	
